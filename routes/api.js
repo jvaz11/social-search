@@ -73,7 +73,7 @@ exports.posts = function(req, res) {
 
 exports.tweets = function(req, res) {
     twitter_api.get('search/tweets.json', {
-        q: '#' + hashtag_query,
+        q: '#' + req.params.hashtag,
         // Maximum number of results allowed by Twitter API 
         count: 10
     }, function(err, tweets, resp) {

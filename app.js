@@ -1,6 +1,6 @@
 
 /**
- * Module dependencies.
+ * Module dependencies
  */
 
 var express = require('express'),
@@ -48,7 +48,7 @@ app.get('/partials/:name', routes.partials);
 app.get('/api/posts', api.posts);
 
 // Twitter JSON API
-app.get('/api/tweetsearch', api.tweets);
+app.get('/api/tweetsearch/byhashtag/:hashtag', api.tweets);
 
 appServer = app.listen(3000, function(){
   console.log("Express server listening on port %d in %s mode", appServer.address().port, app.settings.env);
