@@ -1,0 +1,13 @@
+{
+  "name": "myApp",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "angular": "^1.4.7",
+    "ejs": ">= 0.0.1",
+    "everyauth": ">= 0.3.0",
+    "express": "3.x",
+    "jquery": "^2.1.4",
+    "nconf": ">= 0.5.1"
+  }
+}
