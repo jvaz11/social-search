@@ -2,17 +2,18 @@
 <hr/>
 <div class="featurette">
    <div class="featurette-inner text-center">
-      <form role="form" class="search has-button">
+      <form role="form" class="search has-button" ng-submit="searchPosts(query.body)">
          <h3 class="no-margin-top h1">Search a hashtag or handle</h3>
          <div class="form-group">
-            <input type="text" placeholder="search" class="form-control form-control-lg">
-            <button class="btn btn-lg btn-success" type="button">Search</button>
+            <input type="text" placeholder="search" class="form-control form-control-lg" ng-model="query.body">
+            <button class="btn btn-lg btn-success"  type="submit">Search</button>
          </div>
       </form>
    </div>
-
 </div>
-{{status}}
+
+<div class="spinner text-center" ng-show="fetchingResults">Loading....</div>
+
 <ul class="media-list">
   <li class="media" ng-repeat="tweet in tweets.statuses">
     <div class="media-left">
