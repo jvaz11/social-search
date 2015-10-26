@@ -9,7 +9,13 @@ This is a work in progress. I'm building this as a way of applying a combination
 ## Tools Used
 
 [Express Angular Seed](https://github.com/ganarajpr/express-angular)
+
+[Bootstrap](http://getbootstrap.com/)
+
 [AngularJS](https://angularjs.org/)
+
 [Node.js](https://nodejs.org)
+
 [Express](http://expressjs.com/)
+
 [Twitter API](https://dev.twitter.com)
