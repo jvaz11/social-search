@@ -1,4 +1,4 @@
-angular.module("myApp", ['ui.router'])
+angular.module("myApp", ['ui.router', 'angularMoment', 'angular-clipboard'])
 
 .config(function($stateProvider, $urlRouterProvider) {
         //
@@ -34,16 +34,24 @@ angular.module("myApp", ['ui.router'])
     .controller('MainCtrl', function($scope, $http, twitterFactory) {
         $scope.status;
         $scope.fetchingResults = false;
+        $scope.query = {};
+        $scope.query.prefix = '#';
         $scope.tweets;
-        $scope.searchPosts = function(query) {
+
+        $scope.setPrefix = function(p) {
+            $scope.query.prefix = p;
+            console.log(p);
+        };
+
+        $scope.searchPosts = function(query, prefix) {
             $scope.fetchingResults = true;
-            getTweets(query);
+            getTweets(query, prefix);
 
         };
 
-        function getTweets(query) {
+        function getTweets(query, prefix) {
 
-            twitterFactory.getTweets(query)
+            twitterFactory.getTweets(query, prefix)
                 .success(function(tweets) {
                     $scope.tweets = tweets;
                     $scope.fetchingResults = false;
@@ -52,13 +60,28 @@ angular.module("myApp", ['ui.router'])
                     $scope.status = 'Unable to load tweets: ' + error.message;
                 });
         };
+
+        $scope.textToCopy = 'I can copy by clicking!';
+
+        $scope.success = function () {
+            console.log('Copied!');
+        };
+
+        $scope.fail = function (err) {
+            console.error('Error!', err);
+        };
+        
     })
 
 .factory('twitterFactory', ['$http', function($http) {
 
     var urlBase = '/api/tweetsearch';
     var twitterFactory = {
-        getTweets: function(query) {
+        getTweets: function(query, prefix) {
+            if (prefix === '@') {
+                console.log('its a tag');
+                            return $http.get(urlBase + '/byhandle/' + query);
+            }
             return $http.get(urlBase + '/byhashtag/' + query);
         }
     };

@@ -1,13 +1,40 @@
 {
-  "name": "myApp",
-  "version": "0.0.1",
-  "private": true,
+  "name": "power-search-tool-devs-socialmedia",
+  "version": "0.0.2",
+  "engines": {
+    "node": "4.1.1", 
+    "npm": "2.14.4"
+  },
+  "private": false,
   "dependencies": {
     "angular": "^1.4.7",
+    "angular-clipboard": "^1.1.1",
+    "angular-moment": "^0.10.3",
+    "body-parser": "^1.14.1",
     "ejs": ">= 0.0.1",
-    "everyauth": ">= 0.3.0",
+    "everyauth": "^0.4.9",
     "express": "3.x",
     "jquery": "^2.1.4",
-    "nconf": ">= 0.5.1"
-  }
+    "lodash": "^3.10.1",
+    "nconf": ">= 0.5.1",
+    "request": "^2.65.0",
+    "twitter": "^1.2.5"
+  },
+  "description": "A tool to search for recent posts from Twitter and Instagram that match a hashtag. Each post returned by the search query is displayed along with useful meta-data, like the date/time the post was created, the user name of the poster, and the direct URL to the post.",
+  "main": "server.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jvaz11/social-search-staging.git"
+  },
+  "author": "juan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jvaz11/social-search-staging/issues"
+  },
+  "homepage": "https://github.com/jvaz11/social-search-staging#readme"
 }
