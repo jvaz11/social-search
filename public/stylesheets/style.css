@@ -1,43 +1,52 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 50px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
 }
 
-.dropdown-menu a{
+.dropdown-menu a {
     text-align: center;
 }
 
 html,
 body {
-    height: 100% /* not necessary if you have a fixed height on the feature area */
+    height: 100%/* not necessary if you have a fixed height on the feature area */
 }
+
+
 /* ------ featurette */
+
 .featurette {
     display: table;
     width: 100%;
-    height: 30%; /* set a pixel height and then remove the body,html height */
+    height: 30%;
+    /* set a pixel height and then remove the body,html height */
     vertical-align: middle;
-        background-color: rgba(0, 0, 0, 0); // use rgba and set Opacity to 0 for transparent.
+    background-color: rgba(0, 0, 0, 0); // use rgba and set Opacity to 0 for transparent.
 }
+
 .featurette-inner {
     display: table-cell;
     vertical-align: middle;
 }
+
 .featurette .search {
     padding: 3%;
-    max-width: 980px; /*max width of search*/
+    max-width: 980px;
+    /*max width of search*/
     margin: 0 auto;
 }
+
 .no-margin-top {
     margin-top: 0
 }
 
 
 /* ------ form-control-lg */
+
 .form-control-lg {
     min-height: 46px;
     border-radius: 6px;
@@ -47,14 +56,17 @@ body {
 
 
 /* ------ disjointed form group custom */
+
 .featurette .search.has-button .btn {
     margin-top: 5px;
     width: 100%;
 }
-@media (min-width:480px) { 
+
+@media (min-width:480px) {
     .featurette .search.has-button .form-group {
         position: relative;
-        padding-right: 99px; /*space for button*/
+        padding-right: 99px;
+        /*space for button*/
     }
     .featurette .search.has-button .btn {
         position: absolute;
@@ -63,4 +75,79 @@ body {
         width: auto;
         margin: 0;
     }
+}
+
+
+/**
+ *  Tweet blocks 
+ */
+
+blockquote.twitter-tweet {
+    display: inline-block;
+    font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 16px;
+    border-color: #eee #ddd #bbb;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    margin: 10px 5px;
+    padding: 0 16px 16px 16px;
+    width: 100%;
+}
+
+blockquote.twitter-tweet p {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 17.5px;
+    margin: 10px;
+}
+
+blockquote.twitter-tweet a {
+    color: inherit;
+    font-weight: normal;
+    text-decoration: none;
+    outline: 0 none;
+}
+
+blockquote.twitter-tweet a:hover,
+blockquote.twitter-tweet a:focus {
+    text-decoration: underline;
+}
+
+
+/**
+ *  Result Blocks
+ */
+
+.search-result-block {
+/*        border-color: #eee #ddd #bbb;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);*/
+    margin: 10px 5px;
+    padding: 0 16px 16px 16px;
+}
+
+/**
+ *  Details Table
+ */
+
+ .details-table {
+    margin-top: 10px;
+ }
+
+ /**
+ *  Search Form
+ */
+
+ .search-form-input {
+    font-size: 20px !important;
+ }
+
+.small-timeago {
+    color: #A8A8A8;
 }

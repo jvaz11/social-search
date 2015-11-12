@@ -6,7 +6,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 3000;
 // Git ignore keys
 var keys = require('../keys.js');
 
@@ -72,12 +72,23 @@ exports.posts = function(req, res) {
 };
 
 exports.tweets = function(req, res) {
+
+
     twitter_api.get('search/tweets.json', {
         q: '#' + req.params.hashtag,
         // Maximum number of results allowed by Twitter API 
-        count: 10
+        count: 100
     }, function(err, tweets, resp) {
         res.json(tweets);
     });
 };
 
+exports.tweetsHandle = function(req, res) {
+    twitter_api.get('search/tweets.json', {
+        q: '@' + req.params.hashtag,
+        // Maximum number of results allowed by Twitter API 
+        count: 100
+    }, function(err, tweets, resp) {
+        res.json(tweets);
+    });
+};

@@ -1,29 +1,167 @@
-<h1>Social Search</h1>
-<hr/>
-<div class="featurette">
-   <div class="featurette-inner text-center">
-      <form role="form" class="search has-button" ng-submit="searchPosts(query.body)">
-         <h3 class="no-margin-top h1">Search a hashtag or handle</h3>
-         <div class="form-group">
-            <input type="text" placeholder="search" class="form-control form-control-lg" ng-model="query.body">
-            <button class="btn btn-lg btn-success"  type="submit">Search</button>
-         </div>
-      </form>
-   </div>
+<div class="container">
+    <div class="page-header">
+        <h1>Social Search<br><small>A social media search tool for testing and debugging applications that use Twitter and Instagram's API.</small></h1>
+    </div>
+    <div class="featurette">
+        <div class="featurette-inner text-center">
+            <h3 class="no-margin-top h1">Search a hashtag or handle</h3>
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-primary active" ng-click="setNetwork('twitter')">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked><i class="fa fa-twitter"></i></label>
+                <label class="btn btn-primary" ng-click="setNetwork('instagram')">
+                    <input type="radio" name="options" id="option2" autocomplete="off"><i class="fa fa-instagram"></i></label>
+            </div>
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-primary active" ng-click="setPrefix('#')">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked>#</label>
+                <label class="btn btn-primary" ng-click="setPrefix('@')">
+                    <input type="radio" name="options" id="option2" autocomplete="off">@</label>
+            </div>
+            <form role="form" class="search has-button" ng-submit="searchPosts(query)">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1" style="font-size: 28px">{{ query.prefix }}</span>
+                        <input type="text" placeholder="search" class="form-control form-control-lg search-form-input" aria-describedby="basic-addon1" ng-model="query.body">
+                    </div>
+                    <button class="btn btn-lg btn-success" type="submit">&nbsp;&nbsp;&nbsp;<i class="fa fa-spinner fa-spin" ng-show="fetchingResults"></i>
+                        <i class="fa fa-search fa-lg" ng-hide="fetchingResults"></i>&nbsp;&nbsp;&nbsp;</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="spinner text-center" ng-show="fetchingResults">Loading....</div>
+    <!-- Twitter-formatted results -->
+    <div ng-show="query.network === 'twitter'" class="row search-result-block" ng-repeat="tweet in tweets.statuses">
+        <div class="col-md-4">
+            <blockquote class="twitter-tweet">
+                <div class="media">
+                    <div class="media-left media-middle">
+                        <a ng-show="{{ tweet.entities.media.length > 0 }}" href="#">
+                            <img class="media-object" height="100" width="100" ng-src="{{ tweet.entities.media[0].media_url }}:thumb" alt="...">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <p lang="en" xml:lang="en">{{ tweet.text }}</p>
+                        — <a ng-href="http://twitter.com/{{tweet.user.screen_name}}" target="_blank">@{{tweet.user.screen_name}}</a> {{tweet.created_at | amDateFormat:'MMMM D, YYYY'}}
+                    </div>
+                </div>
+            </blockquote>
+        </div>
+        <div class="col-md-8">
+            <table class="table table-condensed details-table">
+                <tbody>
+                    <tr>
+                        <th scope="row">Date/Time Created</th>
+                        <td><span>{{tweet.created_at |  amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}</span>&nbsp;&nbsp; <small class="small-timeago" am-time-ago="tweet.created_at"></small></td>
+                        <td>
+                            <button type="button" clipboard text="amCreatedAt(tweet.created_at, 'twitter')" on-copied="success()" on-error="fail(err)" class="btn btn-default btn-xs pull-right"><i class="fa fa-clipboard"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">URL</th>
+                        <td><a ng-href="http://twitter.com/{{tweet.user.screen_name}}/status/{{tweet.id_str}}" target="_blank">http://twitter.com/{{tweet.user.screen_name}}/status/{{tweet.id_str}}</a></td>
+                        <td>
+                            <button type="button" clipboard text="getTweetUrl(tweet.user.screen_name, tweet.id_str)" on-copied="success()" on-error="fail(err)" class="btn btn-default btn-xs pull-right"><i class="fa fa-clipboard"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Username/Handle</th>
+                        <td><a ng-href="http://twitter.com/{{tweet.user.screen_name}}" target="_blank">@{{tweet.user.screen_name}}</a></td>
+                        <td>
+                            <button type="button" clipboard text="tweet.user.screen_name" on-copied="success()" on-error="fail(err)" class="btn btn-default btn-xs pull-right"><i class="fa fa-clipboard"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Name</th>
+                        <td>{{ tweet.user.name }}</td>
+                        <td>
+                            <button type="button" clipboard text="tweet.user.name" on-copied="success()" on-error="fail(err)" class="btn btn-default btn-xs pull-right"><i class="fa fa-clipboard"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">SocialItemId ('id_str')</th>
+                        <td>{{ tweet.id_str }}</td>
+                        <td>
+                            <button type="button" clipboard text="tweet.id_str" on-copied="success()" on-error="fail(err)" class="btn btn-default btn-xs pull-right"><i class="fa fa-clipboard"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Has Twitter Image?</th>
+                        <td>{{ tweet.entities.media.length > 0 === true ? 'yes' : 'no'}}</td>
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Instagram-formatted results -->
+    <div ng-show="query.network === 'instagram'" class="row search-result-block" ng-repeat="post in igposts">
+        <div class="col-md-4">
+            <blockquote class="twitter-tweet">
+                <div class="media">
+                    <div class="media-left media-middle">
+
+                    <a ng-href="{{ post.link }}">
+                        <div class="media-left media-middle">
+                            <img class="media-object" height="100" width="100" ng-src="{{ post.images.low_resolution.url }}" alt="...">
+                        </div>
+                    </a>
+                        </div>
+
+                    <div class="media-body">
+                        <p lang="en" xml:lang="en">{{ post.caption.text }}</p>
+                        — <a ng-href="http://instagram.com/{{post.user.username}}" target="_blank">@{{post.user.username}}</a> {{post.created_time | amFromUnix | amDateFormat:'MMMM D, YYYY'}}
+                    </div>
+                </div>
+            </blockquote>
+        </div>
+        <div class="col-md-8">
+            <table class="table table-condensed details-table">
+                <tbody>
+                    <tr>
+                        <th scope="row">Date/Time Created</th>
+                        <td><span>{{post.created_time | amFromUnix |  amDateFormat:'dddd, MMMM Do YYYY, h:mm:ss a'}}</span>&nbsp;&nbsp; <small class="small-timeago" am-time-ago="post.created_time | amFromUnix"></small></td>
+                        <td>
+                            <button type="button" clipboard text="amCreatedAt(post.created_time, 'instagram')" on-copied="success()" on-error="fail(err)" class="btn btn-default btn-xs pull-right"><i class="fa fa-clipboard"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">URL</th>
+                        <td><a ng-href="{{ post.link }}" target="_blank">{{ post.link }}</a></td>
+                        <td>
+                            <button type="button" clipboard text="post.link" on-copied="success()" on-error="fail(err)" class="btn btn-default btn-xs pull-right"><i class="fa fa-clipboard"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Username/Handle</th>
+                        <td><a ng-href="http://instagram.com/{{tweet.user.screen_name}}" target="_blank">@{{post.user.username}}</a></td>
+                        <td>
+                            <button type="button" clipboard text="post.user.username" on-copied="success()" on-error="fail(err)" class="btn btn-default btn-xs pull-right"><i class="fa fa-clipboard"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Name</th>
+                        <td>{{ post.user.full_name }}</td>
+                        <td>
+                            <button type="button" clipboard text="post.user.full_name" on-copied="success()" on-error="fail(err)" class="btn btn-default btn-xs pull-right"><i class="fa fa-clipboard"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">SocialItemId ('post.id')</th>
+                        <td>{{ post.id }}</td>
+                        <td>
+                            <button type="button" clipboard text="post.id" on-copied="success()" on-error="fail(err)" class="btn btn-default btn-xs pull-right"><i class="fa fa-clipboard"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Caption was edited?</th>
+                        <td>{{ post.created_time === post.caption.created_time ? 'no' : 'yes'}}</td>
+                        <td>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-
-<div class="spinner text-center" ng-show="fetchingResults">Loading....</div>
-
-<ul class="media-list">
-  <li class="media" ng-repeat="tweet in tweets.statuses">
-    <div class="media-left">
-      <a href="#">
-        <img class="media-object" ng-src="{{tweet.user.profile_image_url}}" alt="...">
-      </a>
-    </div>
-    <div class="media-body">
-      <h4 class="media-heading">Media heading</h4>
-      <p>{{tweet.text}}</p>
-    </div>
-  </li>
-</ul>

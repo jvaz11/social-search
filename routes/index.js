@@ -3,7 +3,7 @@
  */
 
 exports.index = function(req, res){
-  res.render('index',{title:"Yo"});
+  res.render('index',{title:"Social Search"});
 };
 
 exports.login = function(req, res){
