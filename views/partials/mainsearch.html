@@ -154,12 +154,6 @@
                             <button type="button" clipboard text="post.id" on-copied="success()" on-error="fail(err)" class="btn btn-default btn-xs pull-right"><i class="fa fa-clipboard"></i></button>
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row">Caption was edited?</th>
-                        <td>{{ post.created_time === post.caption.created_time ? 'no' : 'yes'}}</td>
-                        <td>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
         </div>

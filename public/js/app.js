@@ -108,7 +108,7 @@ angular.module("myApp", ['ui.router', 'angularMoment', 'angular-clipboard'])
     var Instagram = {
         getIgPosts: function(callback) {
 
-            var endPoint = "https://api.instagram.com/v1/tags/bobabear/media/recent?client_id=b1e0e8be521145b8a969e73605a663df&callback=JSON_CALLBACK";
+            var endPoint = "https://api.instagram.com/v1/tags/enplugcafe/media/recent?client_id=b1e0e8be521145b8a969e73605a663df&callback=JSON_CALLBACK";
 
             $http.jsonp(endPoint).success(function(response) {
                 callback(response.data);
