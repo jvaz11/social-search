@@ -38,6 +38,11 @@ angular.module("myApp", ['ui.router', 'angularMoment', 'angular-clipboard'])
                 .success(function(tweets) {
                     $scope.tweets = tweets;
                     $scope.fetchingResults = false;
+                    $scope.resultsCurrentlyShowingTwitter = {
+                        prefix: query.prefix,
+                        body: query.body,
+                        network: 'Twitter'
+                    };
                 })
                 .error(function(error) {
                     $scope.status = 'Unable to load tweets: ' + error.message;
@@ -48,7 +53,11 @@ angular.module("myApp", ['ui.router', 'angularMoment', 'angular-clipboard'])
                 $scope.igposts = data;
                 console.log(data);
                 $scope.fetchingResults = false;
-
+                $scope.resultsCurrentlyShowingInstagram = {
+                    prefix: query.prefix,
+                    body: query.body,
+                    network: 'Instagram'
+                };
             });
         }
 
