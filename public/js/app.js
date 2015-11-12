@@ -43,7 +43,7 @@ angular.module("myApp", ['ui.router', 'angularMoment', 'angular-clipboard'])
                     $scope.status = 'Unable to load tweets: ' + error.message;
                 });
         } else {
-            Instagram.getIgPosts(function(data) {
+            Instagram.getIgPosts(query.body, function(data) {
 
                 $scope.igposts = data;
                 console.log(data);
@@ -52,17 +52,6 @@ angular.module("myApp", ['ui.router', 'angularMoment', 'angular-clipboard'])
             });
         }
 
-    };
-
-    function getTweets(query, prefix) {
-        Twitter.getTweets(query, prefix)
-            .success(function(tweets) {
-                $scope.tweets = tweets;
-                $scope.fetchingResults = false;
-            })
-            .error(function(error) {
-                $scope.status = 'Unable to load tweets: ' + error.message;
-            });
     };
 
     $scope.success = function() {
@@ -106,9 +95,9 @@ angular.module("myApp", ['ui.router', 'angularMoment', 'angular-clipboard'])
 .factory('Instagram', ['$http', function($http) {
 
     var Instagram = {
-        getIgPosts: function(callback) {
+        getIgPosts: function(querybody, callback) {
 
-            var endPoint = "https://api.instagram.com/v1/tags/enplugcafe/media/recent?client_id=b1e0e8be521145b8a969e73605a663df&callback=JSON_CALLBACK";
+            var endPoint = 'https://api.instagram.com/v1/tags/' + querybody + '/media/recent?client_id=b1e0e8be521145b8a969e73605a663df&callback=JSON_CALLBACK';
 
             $http.jsonp(endPoint).success(function(response) {
                 callback(response.data);
